@@ -122,8 +122,6 @@ def boustrophedon(t, i, j):
             for x in range(sup, inf - 1, -1):
                 if t[x] > t[x + 1]:
                     permuter(t, x, x + 1)
-            sens = True
-            inf += 1
             # Tri en reculant
             print(f"--------- 3_1 ---------")
             for x in range(i, inf):
@@ -133,6 +131,8 @@ def boustrophedon(t, i, j):
             for x in range(inf + 1, j + 1):
                 assert t[x] >= t[inf]
             print(f"∀x ∈ [inf+1, j], t[x] >= t[inf]\n")
+            sens = True
+            inf += 1
             ###
         print(t)
         # Fin de boucle (meme chose que début de boucle)
