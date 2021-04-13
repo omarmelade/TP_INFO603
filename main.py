@@ -1,7 +1,3 @@
-# This is a sample Python script.
-# --------Exo 1
-
-# fonction utiles
 
 from tri import boustrophedon, partition
 
@@ -24,10 +20,10 @@ if __name__ == '__main__':
     arr = [int(i) for i in arr]
     print(arr)
     print("Que voulez vous faire :\n  1 - partition\n  2 - tri boustrophedon\n")
-    choice = input()
-    if int(choice) == 1:
+    choice = int(input())
+    if choice == 1:
         partition(arr, 0, len(arr) - 1)
-    elif int(choice) == 2:
+    elif choice == 2:
         boustrophedon(arr, 0, len(arr) - 1)
     else:
         print("Cette fonctionnalité n'existe pas")
