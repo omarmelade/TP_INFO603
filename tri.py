@@ -89,33 +89,65 @@ def boustrophedon(t, i, j):
     inf = i
     sup = j
 
-    # Condition initial ?
-    print(f"--------- 1 ---------")
-
     while inf < sup:
 
         # Début de boucle
-        print(f"--------- 2_1 ---------")
+        print(f"--------- 1_1 ---------")
         for x in range(i, inf):
             assert t[x] <= t[inf]
         print(f"∀x ∈ [i, inf-1], t[x] <= t[inf]\n")
 
-        print(f"--------- 2_2 ---------")
+        print(f"--------- 1_2 ---------")
         for x in range(sup + 1, j):
             assert t[x] >= t[sup]
         print(f"∀x ∈ [sup+1, j], t[x] >= t[sup]\n")
-        #
 
         if sens:
             for x in range(inf, sup):
                 if t[x] > t[x + 1]:
                     permuter(t, x, x + 1)
+            # Tri en avancant
+            print(f"--------- 2_1 ---------")
+            for x in range(sup + 1, j + 1):
+                assert t[x] >= t[sup]
+            print(f"∀x ∈ [sup+1, j], t[x] >= t[sup]\n")
+            print(f"--------- 2_2 ---------")
+            for x in range(i, sup):
+                assert t[x] <= t[sup]
+            print(f"∀x ∈ [i, sup-1], t[x] <= t[sup]\n")
             sens = False
             sup -= 1
+
         else:
             for x in range(sup, inf - 1, -1):
                 if t[x] > t[x + 1]:
                     permuter(t, x, x + 1)
             sens = True
             inf += 1
+            # Tri en reculant
+            print(f"--------- 3_1 ---------")
+            for x in range(i, inf):
+                assert t[x] <= t[inf]
+            print(f"∀x ∈ [i, inf-1], t[x] <= t[inf]\n")
+            print(f"--------- 3_2 ---------")
+            for x in range(inf + 1, j + 1):
+                assert t[x] >= t[inf]
+            print(f"∀x ∈ [inf+1, j], t[x] >= t[inf]\n")
+            ###
         print(t)
+        # Fin de boucle (meme chose que début de boucle)
+        print(f"--------- 4_1 ---------")
+        for x in range(i, inf):
+            assert t[x] <= t[inf]
+        print(f"∀x ∈ [i, inf-1], t[x] <= t[inf]\n")
+
+        print(f"--------- 4_2 ---------")
+        for x in range(sup + 1, j):
+            assert t[x] >= t[sup]
+        print(f"∀x ∈ [sup+1, j], t[x] >= t[sup]\n")
+
+    # Fin de programme
+    print(f"--------- 5 ---------")
+    for x in range(i, j):
+        assert (t[x] <= t[x + 1])
+    print("∀x ∈ [i, j-1], t[x] <= t[x+1]\n")
