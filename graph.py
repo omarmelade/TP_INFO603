@@ -98,6 +98,7 @@ g.addLink(5, 10, 502)
 g.addLink(6, 9, 250)
 g.addLink(8, 4, 183)
 g.addLink(8, 10, 167)
+g.addLink(9, 10, 84)
 g.printGraph()
 g.dijkstra(1)
 
@@ -119,6 +120,93 @@ class graphRec:
 		for n in self.next:
 			n.get("node").printGraph()
 
+	def getNodes(self):
+		res = []
+		res.append(self.id_node)
+		suivants = self.next
+		while len(suivants) > 0:
+			for node in suivants:
+				if not(node["node"].id_node in res):
+					res.append(node["node"].id_node)
+			new_suivants = []
+			for node in suivants:
+				new_suivants.extend(node["node"].next)
+			suivants = new_suivants
+			
+		return res
+
+	def removeMin(self, Q, dist):
+		min_dist = sys.maxsize
+		min_rank = 0
+		for i in range(len(Q)):
+			if dist[Q[i]] < min_dist:
+				min_dist = dist[Q[i]]
+				min_rank = i
+		res = Q[min_rank]
+		del Q[min_rank]
+		return res
+
+	def getNode(self, id_node):
+		if (self.id_node == id_node):
+			return self
+
+		suivants = self.next
+		while len(suivants) > 0:
+			for node in suivants:
+				if (node["node"].id_node == id_node):
+					return node["node"]
+			new_suivants = []
+			for node in suivants:
+				new_suivants.extend(node["node"].next)
+			suivants = new_suivants
+			
+		return None
+
+	def get_neighbours(self, node, visited):
+
+		N = self.getNode(node)
+
+		res = []
+		for elem in N.next:
+			if not(elem["node"].id_node in visited):
+				res.append(elem["node"].id_node)
+			
+		return res
+
+	def get_distance(self, n1, n2):
+
+		V = self.getNode(n1)
+		for elem in V.next:
+			if (elem["node"].id_node == n2):
+				return elem["weight"]
+		return -1
+
+	def dijkstra(self, first_node):
+		# init dist
+		dist = {}
+		nodes = self.getNodes()
+		print(f"getNodes : \n{nodes}")
+		for node in nodes:
+			if node == first_node:
+				dist[node] = 0
+			else:
+				dist[node] = sys.maxsize
+		Q = nodes
+		S = []
+
+		while len(Q) > 0:
+			v = self.removeMin(Q, dist)
+			S.append(v)
+
+			neighbours = self.get_neighbours(v, S)
+
+			for neighbour in neighbours:
+				d = dist[v] + self.get_distance(v, neighbour)
+				if d < dist[neighbour]:
+					dist[neighbour] = d
+
+		print(f"dist: {dist}")
+
 
 
 g1 = graphRec(1)
@@ -126,10 +214,22 @@ g2 = graphRec(2)
 g3 = graphRec(3)
 g4 = graphRec(4)
 g5 = graphRec(5)
+g6 = graphRec(6)
+g7 = graphRec(7)
+g8 = graphRec(8)
+g9 = graphRec(9)
+g10 = graphRec(10)
 
-g1.addLink(g2, 12)
-g1.addLink(g3, 25)
-g2.addLink(g4, 8)
-g4.addLink(g5, 33)
-g3.addLink(g5, 5)
-g1.printGraph()
+g1.addLink(g2, 85)
+g1.addLink(g3, 217)
+g1.addLink(g5, 173)
+g2.addLink(g6, 80)
+g3.addLink(g7, 186)
+g3.addLink(g8, 103)
+g5.addLink(g10, 502)
+g6.addLink(g9, 250)
+g8.addLink(g4, 183)
+g8.addLink(g10, 167)
+g9.addLink(g10, 84)
+#g1.printGraph()
+g1.dijkstra(1)
