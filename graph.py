@@ -105,7 +105,6 @@ g.dijkstra(1)
 class graphRec:
 	def __init__(self, id_node):
 		self.id_node = id_node
-		self.visited = False
 		self.next = []
 
 	def addLink(self, next_node, weight):
